@@ -33,8 +33,8 @@
         '';
 
         installPhase = ''
-          mkdir -p $out/bin
-          cp ss3code $out/bin
+          mkdir -p $out/src
+          cp ss3code $out/src
         '';   
 
      };
