@@ -22,6 +22,8 @@
           rev = "v3.30.22.1";
           sha256 = "r/grfMvbna6XpfovOiT96d7Mm4o06l4WzGX3VFGojYQ=";
         };
+       
+        nativeBuildInputs = [ makeWrapper ];
 
         buildInputs = [ tpl2cpp.packages.x86_64-linux.default ];
 
@@ -29,12 +31,14 @@
           cat $src/SS_biofxn.tpl $src/SS_miscfxn.tpl $src/SS_selex.tpl $src/SS_popdyn.tpl $src/SS_recruit.tpl $src/SS_benchfore.tpl $src/SS_expval.tpl $src/SS_objfunc.tpl $src/SS_write.tpl $src/SS_write_ssnew.tpl $src/SS_write_report.tpl $src/SS_ALK.tpl $src/SS_timevaryparm.tpl $src/SS_tagrecap.tpl > SS_functions.temp
           cat $src/SS_versioninfo_330safe.tpl $src/SS_readstarter.tpl $src/SS_readdata_330.tpl $src/SS_readcontrol_330.tpl $src/SS_param.tpl $src/SS_prelim.tpl $src/SS_global.tpl $src/SS_proced.tpl SS_functions.temp > ss3.tpl
           tpl2cpp ss3
-          cat ss3.htp ss3.cpp > ss3code
+          
         '';
 
         installPhase = ''
-          mkdir -p $out/src
-          cp ss3code $out/src
+          mkdir -p $out/bin
+          cp ss3code.sh $out/bin
+          chmod +x $out/bin/ss3code.sh
+          wrapProgram $out/bin/ss3code.sh --prefix PATH : ${lib.makeBinPath [ tpl2cpp ]} 
         '';   
 
      };
