@@ -34,7 +34,7 @@
 
         installPhase = ''
           mkdir -p $out/bin
-          cp ss3code.sh $out/bin
+          echo "#!/usr/bin/bash\ntpl2cpp ss3" > $out/bin/ss3code.sh
           cp ss3.tpl $out/bin
           chmod +x $out/bin/ss3code.sh
           wrapProgram $out/bin/ss3code.sh --prefix PATH : ${lib.makeBinPath [ tpl2cpp ]} 
