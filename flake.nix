@@ -34,7 +34,7 @@
 
         installPhase = ''
           mkdir -p $out/bin
-          install -t $out/bin ss3code
+          cp ss3code $out/bin
         '';   
 
      };
