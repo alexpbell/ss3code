@@ -29,15 +29,18 @@
 
         buildPhase = ''
           cat $src/SS_biofxn.tpl $src/SS_miscfxn.tpl $src/SS_selex.tpl $src/SS_popdyn.tpl $src/SS_recruit.tpl $src/SS_benchfore.tpl $src/SS_expval.tpl $src/SS_objfunc.tpl $src/SS_write.tpl $src/SS_write_ssnew.tpl $src/SS_write_report.tpl $src/SS_ALK.tpl $src/SS_timevaryparm.tpl $src/SS_tagrecap.tpl > SS_functions.temp
-          cat $src/SS_versioninfo_330safe.tpl $src/SS_readstarter.tpl $src/SS_readdata_330.tpl $src/SS_readcontrol_330.tpl $src/SS_param.tpl $src/SS_prelim.tpl $src/SS_global.tpl $src/SS_proced.tpl SS_functions.temp > ss3.tpl         
+          cat $src/SS_versioninfo_330safe.tpl $src/SS_readstarter.tpl $src/SS_readdata_330.tpl $src/SS_readcontrol_330.tpl $src/SS_param.tpl $src/SS_prelim.tpl $src/SS_global.tpl $src/SS_proced.tpl SS_functions.temp > ss3.tpl
+          tpl2cpp ss3
+          cat ss3.htp ss3.cpp > ss3.txt         
         '';
 
         installPhase = ''
           mkdir -p $out/bin
-          echo "#!/usr/bin/bash\ntpl2cpp ss3" > $out/bin/ss3code.sh
-          cp ss3.tpl $out/bin
+          echo "#!/usr/bin/bash" > $out/bin/ss3code.sh
+          echo "echo '" >> $out/bin/ss3code.sh
+          cat ss3.txt >> $out/bin/ss3code.sh
+          echo "'" >> $out/bin/ss3code.sh
           chmod +x $out/bin/ss3code.sh
-          wrapProgram $out/bin/ss3code.sh --prefix PATH : ${lib.makeBinPath [ tpl2cpp ]} 
         '';   
 
      };
