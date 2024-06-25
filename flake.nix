@@ -32,14 +32,14 @@
           cat $src/SS_versioninfo_330safe.tpl $src/SS_readstarter.tpl $src/SS_readdata_330.tpl $src/SS_readcontrol_330.tpl $src/SS_param.tpl $src/SS_prelim.tpl $src/SS_global.tpl $src/SS_proced.tpl SS_functions.temp > ss3.tpl
           tpl2cpp ss3
           cat ss3.htp ss3.cpp > ss3.txt
-          sed 's/\'//g' ss3.txt         
+          sed "s/'//g" ss3.txt > ss3clean.txt
         '';
 
         installPhase = ''
           mkdir -p $out/bin
           echo "#!/usr/bin/bash" > $out/bin/ss3code.sh
           echo "echo '" >> $out/bin/ss3code.sh
-          cat ss3.txt >> $out/bin/ss3code.sh
+          cat ss3clean.txt >> $out/bin/ss3code.sh
           echo "'" >> $out/bin/ss3code.sh
           chmod +x $out/bin/ss3code.sh
         '';   
