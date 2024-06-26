@@ -33,15 +33,15 @@
           tpl2cpp ss3
           cat ss3.htp ss3.cpp > ss3.txt
           sed "s/'//g" ss3.txt > ss3clean.txt
-        '';
-
-        installPhase = ''
-          mkdir -p $out/bin
           echo "#!/usr/bin/bash" > ss3code
           echo "echo '" >> ss3code
           cat ss3clean.txt >> ss3code
           echo "'" >> ss3code
           chmod +x ss3code
+        '';
+
+        installPhase = ''
+          mkdir -p $out/bin
           install -t $out/bin ss3code
         '';   
 
