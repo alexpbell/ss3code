@@ -37,11 +37,12 @@
 
         installPhase = ''
           mkdir -p $out/bin
-          echo "#!/usr/bin/bash" > $out/bin/ss3code
-          echo "echo '" >> $out/bin/ss3code
-          cat ss3clean.txt >> $out/bin/ss3code
-          echo "'" >> $out/bin/ss3code
-          chmod +x $out/bin/ss3code
+          echo "#!/usr/bin/bash" > ss3code
+          echo "echo '" >> ss3code
+          cat ss3clean.txt >> ss3code
+          echo "'" >> ss3code
+          chmod +x ss3code
+          install -t $out/bin ss3code
         '';   
 
      };
